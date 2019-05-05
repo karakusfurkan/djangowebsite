@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+
+
+
+{% block body %}
+
+
+{% if articles %}
+
+  <div class="col-lg-8">
+      <h3>Articles</h3>
+      <hr>
+      <form>
+      {% csrf_token %}
+    <input type="text" name="keyword" class="input-sm" maxlength="64" placeholder="Search Articles">
+<button type="submit" class="btn btn-danger">Search</button>
+</form>
+<hr>
+</div>
+
+
+{% for article in articles %}
+
+<div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+      
+
+        <!-- Title -->
+        <a href="{% url 'article:detail' article.id %}"><h1 class="mt-4">{{article.title}}</h1></a>
+
+        <!-- Author -->
+        <p class="lead">
+         
+         Published by <small>{{article.author.username}}</small> 
+        
+        </p>
+
+        <hr>
+
+        <!-- Date/Time -->
+        <p>{{article.created_date}}</p>
+
+        
+
+        {% if article.articleImage %}
+        <hr>
+        <a href="{% url 'article:detail' article.id %}"><img class="img-fluid rounded" src="{{article.articleImage.url}}" alt=""></a>
+        {% endif %}
+        
+
+
+        <!-- Post Content -->
+        <p class="lead">{{article.content|safe|truncatewords:10}}</p>
+        <a style="float : right;" href="{% url 'article:detail' article.id %}" class = "btn btn-danger">Read More</a>
+        <hr>
+</div>
+</div>
+
+
+{% endfor %}
+
+
+
+{% else %}
+
+
+<div class="col-lg-8">
+ <form>
+      {% csrf_token %}
+    <input type="text" name="keyword" class="input-sm" maxlength="64" placeholder="Search Articles">
+<button type="submit" class="btn btn-danger">Search</button>
+</form>
+<div class="alert alert-danger">Article not found.</div>
+</div>
+{% endif %}
+
+{% endblock body %}

@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class ="jumbotron text-center">
+        <h3>Welcome to the test blog!</h3>
+        <p>In this blog, you can share article but be aware it's just a Django example for me!!!</p>
+
+
+
+</div>
+
+<p>
+{% if request.user.is_authenticated %}
+        Logged in.  <div class="alert alert-success">{{request.user.username}}</div>
+{% else %}
+        No one logged in.
+{% endif %}
+
+</p>
+
+{% endblock body %}
+
